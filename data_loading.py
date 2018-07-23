@@ -28,8 +28,8 @@ def coinmarketcap_data(ticker, conversion_currency, frequency, data_points):
     url = 'https://min-api.cryptocompare.com/data/{}?fsym={}&tsym={}&limit={}&aggregate={}'\
     .format(freq, ticker.upper(), conversion_currency.upper(), data_points, aggregate)
     
-    page = requests.get(url)
-    data = page.json()['Data']
-    df = pd.DataFrame(data)
-    df['timestamp'] = [datetime.datetime.fromtimestamp(d) for d in df.time]
+    get_page = requests.get(url)
+    raw_data = get_page.json()['Data']
+    df = pd.DataFrame(raw_data)
+    df['datetime'] = [datetime.datetime.fromtimestamp(d) for d in df.time]
     return df
